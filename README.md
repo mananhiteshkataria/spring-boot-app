@@ -155,3 +155,22 @@ rebuild with goals as package
 and you should have success and run again
 
 ```
+## Spring Data Jpa ##
+
+- Automate database configurations
+
+- Uses Interface 
+
+- Automate Crud Operations on any entity class , it provides some interfaces like 
+
+- CrudRepository<T>
+- JpaRepository<T>
+
+- These interfaces you must extend with the interface you want in DAO layer and spring boot will automatically implement the interface based on the equity 
+
+- Interface EmployeeRepository extends JpaRepository <"daoclass">{}
+
+- Here Employee is an Entity class mapped to employee table, EmployeeRepository gets all the methods of JpaRepository like save(object),deleteById(id),findAll(),getById(id)and so on
+- Note: Spring boot will take care providing a proxy for implementation for the EmployeeRepository so that all the methods would work on table without any problem.
+- We need to only inject the EmployeeRepository to the @Service class.
+- 
