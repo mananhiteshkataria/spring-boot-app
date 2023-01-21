@@ -103,10 +103,10 @@ ReST stands for Representational State Transfer which is used to make heterogene
 
 Http Methods
 
-1. HTTP Post: To perform store/create operation
-1. HTTP Get: To perform retrieve/fetch operation
-1. HTTP Put: To perform update/modify operation
-1. HTTP Delete: To perform remove/delete operation
+1. HTTP Post- To perform store/create operation
+1. HTTP Get- To perform retrieve/fetch operation
+1. HTTP Put- To perform update/modify operation
+1. HTTP Delete- To perform remove/delete operation
    
 ## URL ##
 
@@ -168,9 +168,54 @@ and you should have success and run again
 
 - These interfaces you must extend with the interface you want in DAO layer and spring boot will automatically implement the interface based on the equity 
 
-- Interface EmployeeRepository extends JpaRepository <"daoclass">{}
+- Interface EmployeeRepository extends JpaRepository <orm,integer>{}
 
 - Here Employee is an Entity class mapped to employee table, EmployeeRepository gets all the methods of JpaRepository like save(object),deleteById(id),findAll(),getById(id)and so on
 - Note: Spring boot will take care providing a proxy for implementation for the EmployeeRepository so that all the methods would work on table without any problem.
 - We need to only inject the EmployeeRepository to the @Service class.
-- 
+
+
+  Methods are
+
+1. save(T obj)-T
+2. deleteById(T primaryKey):void
+3. findAll() -List<T,>
+
+``` java
+@Entity
+@Table("employee")
+public class Employee {@Id,empId,name,salary}
+>> DAO Layer
+interface EmployeeRepository extends JpaRepository <Employee,Integer>
+{
+	
+}
+```
+>> No Implemenetation required for EmployeeRepository because 
+>> Spring boot does the implementation of all the methods your job
+>> is to only call save(),delete(),findAll(),findById() methods
+
+
+## Service Layer ##
+``` java
+@Service
+public class EmployeeService
+{
+ @AutoWired
+ EmployeeRepository dao;
+ //call crud methods in service layer as below
+ dao.save(obj), dao.findAll(), dao.findById(value)
+}
+```
+
+## Setup for Spring boot & Spring data jpa ##
+
+1. Add Spring Data Jpa & Derby library
+      1. spring starter data jpa
+      2. derby client
+2. Create an entity class that maps to employee table
+   1. Start the database server(startNetworkServer)
+3. create an interface in dao layer that extends JpaRepository <T,ID>
+4. Create a class in service layer that injects dao layer object
+5. Configure application.properties with data source like username,password,url,driverClassName
+6. Update the Rest Controller class to perform the operations defined in service layer class
