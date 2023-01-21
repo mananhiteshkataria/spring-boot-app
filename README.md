@@ -130,3 +130,28 @@ You must use application.properties in resources
 ``` application.properties
 server.port=9090
 ```
+
+
+## If you face issues ##
+
+```
+
+stop project
+
+project clean
+
+project maven clean
+
+project maven build (goals as package) if success run
+
+if fails 
+
+build path change jre library
+
+maven update project
+
+rebuild with goals as package
+
+and you should have success and run again
+
+```
