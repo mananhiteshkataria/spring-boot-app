@@ -20,11 +20,6 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
@@ -47,8 +42,23 @@
 		<dependency>
     		<groupId>org.apache.derby</groupId>
     		<artifactId>derbyclient</artifactId>
-    		<version>10.13.1.1</version><!--$NO-MVN-MAN-VER$-->
+    		<version>10.16.1.1</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.derby/derbyshared -->
+		<dependency>
+    		<groupId>org.apache.derby</groupId>
+    		<artifactId>derbyshared</artifactId>
+    		<version>10.16.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.derby/derbytools -->
+		<dependency>
+    		<groupId>org.apache.derby</groupId>
+    		<artifactId>derbytools</artifactId>
+    		<version>10.16.1.1</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+
+
+
 
 	</dependencies>
 

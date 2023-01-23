@@ -47,10 +47,10 @@ It simplifies spring configurations in the application automatically with the in
 
 Some of the starter libraries:
 - Web :
- This does all the configuration required for web & rest applications like server configuration, front controller configuration, scanning all the @component, @service , @repository, @restcontroller classes to create their objects in the spring container.
+ This does all the configuration required for web & rest applications like server configuration, front controller configuration, scanning all the @component, @service , @repository, @RestController classes to create their objects in the spring container.
 
 - DataJPA : 
-  This does all the configuration required for database beans like DriverManagerDataSource injecting to JdbcTemplate,HibernateTemplate & so on,it automatically reads application.properties for datasource informations like username , password , url, driverClassname etc.
+  This does all the configuration required for database beans like DriverManagerDataSource injecting toJDBCTemplate,HibernateTemplate & so on,it automatically reads application.properties for data source information like username , password , url, driverclassname etc.
 
 - Spring Cloud : 
   This does configurations required for cloud environments like service discovery , load balancer and etc. 
@@ -99,7 +99,7 @@ All the objects like A,B & C are created in spring container.
 
 ## RESTfull Web Services ##
 
-ReST stands for Representational State Transfer which is used to make heterogeneous applications to exchange the data regardless of the technology they are using, ReST webservices uses Http methods to specify the operations each Http methods must have some URL's which is used by the applications who wants to communincate.
+ReST stands for Representational State Transfer which is used to make heterogeneous applications to exchange the data regardless of the technology they are using, ReST web-services uses Http methods to specify the operations each Http methods must have some URL's which is used by the applications who wants to communicate.
 
 Http Methods
 
@@ -191,7 +191,7 @@ interface EmployeeRepository extends JpaRepository <Employee,Integer>
 	
 }
 ```
->> No Implemenetation required for EmployeeRepository because 
+>> No Implementation required for EmployeeRepository because 
 >> Spring boot does the implementation of all the methods your job
 >> is to only call save(),delete(),findAll(),findById() methods
 
@@ -219,3 +219,59 @@ public class EmployeeService
 4. Create a class in service layer that injects dao layer object
 5. Configure application.properties with data source like username,password,url,driverClassName
 6. Update the Rest Controller class to perform the operations defined in service layer class
+   
+  ```java 
+	//To perform delete by id
+   	//Service
+   	@Transactional
+   	public void deleteEmployee(int id){
+   	dao.deleteById(id);
+   }
+   //Controller
+   
+   	ping("/delete/{id}")
+   	public ResponseEntity<Object>delete(@PathVariable("id")	int id)
+   	{
+   		service.deleteEmployee(id);
+   	}
+   
+   //to perform update salary by id in service & controller
+   
+   	@Transactional
+   	public employee updateEmployee(int id,double salary){
+   	Employee e = getEmployee(id);
+   	e.setSalary(salary);
+   	dao.save(e);// this is optional
+   	}
+   
+   // Creating Custom Exception
+   public class EmployeeNotFOundException extends Exception{
+	public EmployeeNotFOundException(String err){
+		super (err)
+	}
+
+	throw new Employee
+   }
+   ```
+   
+   ## CORS ##
+   
+   Cross Origin Resource Sharing is disabled by default at the back end if any front-end needs to be access hence you must enable which front-end can access back end by configuring CORS at the back end application.
+   
+   Spring uses an annotation called @CrossOrigin(origin={}) which allows you to configure all the origins who can access the application.
+   
+   If angular which is running in http://localhost:4200 then we must add this origin in @CrossOrigin as below
+   
+   @CrossOrigin(origin={"http://localhost:4200"} on top of the controller
+
+   ## Integrating Angular with Spring Boot Services
+
+   Steps:
+
+   1. Add @CrossOrigin in spring boot web-service
+   2. Create angular project & select yes for routing , select css for styling (name of the project: employee-ui)
+   3. Ensure Database, Spring Boot application is running
+   4. Add Bootstrap in the angular
+   5. Add FormsModule , ReactiveFormsModule,HttpClientModule in AppModule of app.module.ts
+   6. Create components for storing,fetchALL,update
+   7. All the components you create can be shown in root component or using routers.
